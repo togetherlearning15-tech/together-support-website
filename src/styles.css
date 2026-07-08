@@ -73,3 +73,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   .ctaBand{padding:48px 6vw}
   .pageHero{padding:100px 6vw 46px}
 }
+
+/* Website enquiry forms */
+.form button:disabled{opacity:.72;cursor:not-allowed;transform:none!important}
+.formStatus{margin:10px 0 0;padding:12px 14px;border-radius:14px;font-weight:800;font-size:.94rem;line-height:1.5}
+.formStatus.success{background:#e9fbf5;color:#086747;border:1px solid #acebd5}
+.formStatus.error{background:#fff1f2;color:#9f1239;border:1px solid #fecdd3}
+.formStatus.sending{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.hpField{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
