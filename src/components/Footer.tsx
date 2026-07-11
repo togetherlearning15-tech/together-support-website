@@ -16,6 +16,7 @@ export function Footer() {
         <Link to="/#properties">Properties</Link>
         <Link to="/#referrals">Referrals</Link>
         <Link to="/#landlords">Landlords</Link>
+        <Link to="/careers">Careers</Link>
       </div>
       <div>
         <strong>Support</strong>
@@ -29,6 +30,7 @@ export function Footer() {
         <span>27–31 Church Road, Bristol, BS5 9JJ</span>
         <span>0330 221 0527</span>
         <span>admin@togsupport.co.uk</span>
+        <span>recruitment@togsupport.co.uk</span>
         <span>www.togsupport.co.uk</span>
       </div>
     </footer>

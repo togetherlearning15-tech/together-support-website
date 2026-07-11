@@ -81,3 +81,31 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .formStatus.error{background:#fff1f2;color:#9f1239;border:1px solid #fecdd3}
 .formStatus.sending{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
 .hpField{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+
+/* Careers page */
+.careersHero{background:linear-gradient(135deg,#fff 0%,#f3fbfb 45%,#d7f9f4 100%)}
+.careersIntro{display:grid;gap:34px}
+.careersBenefits{grid-template-columns:repeat(3,1fr)}
+.careerBenefit{background:#fff;border:1px solid #e3edf1;border-radius:24px;padding:26px;box-shadow:0 16px 36px #17324d0d;transition:.2s ease}
+.careerBenefit:hover{transform:translateY(-4px);box-shadow:0 24px 48px #17324d18}
+.careerBenefit svg{width:34px;height:34px;color:var(--teal2);margin-bottom:13px}
+.careerBenefit h3{margin:0 0 7px;color:var(--navy);font-size:1.18rem}
+.careerBenefit p{margin:0;color:var(--muted);line-height:1.68}
+.vacanciesSection{display:grid;gap:30px}
+.vacancyGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.vacancyCard{background:#fff;border:1px solid #e3edf1;border-radius:22px;padding:23px;box-shadow:0 14px 32px #17324d0b}
+.vacancyCard svg{color:var(--teal2)}
+.vacancyCard h3{color:var(--navy);margin:12px 0 5px;font-size:1.08rem}
+.vacancyCard p{color:var(--muted);margin:0 0 12px}
+.vacancyCard a{color:var(--teal2);font-weight:900}
+.careersApplication{align-items:start}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form select{width:100%;border:1px solid #dbe7ee;border-radius:14px;padding:14px 15px;background:#fff;color:var(--navy);font:inherit}
+.formHelp{font-size:.88rem;color:var(--muted);line-height:1.55;margin:0}
+.formHelp a{color:var(--teal2);font-weight:850}
+.careersCta{display:flex;align-items:center;justify-content:space-between;gap:30px;background:linear-gradient(135deg,var(--navy),#164865);color:#fff}
+.careersCta h2{color:#fff;margin-bottom:10px}
+.careersCta p{color:#d7e7ef;max-width:680px;margin:0}
+.careersCta .btn{flex-shrink:0}
+@media(max-width:1000px){.careersBenefits{grid-template-columns:repeat(2,1fr)}.vacancyGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.careersBenefits,.vacancyGrid,.formGrid{grid-template-columns:1fr}.careersCta{align-items:flex-start;flex-direction:column}}

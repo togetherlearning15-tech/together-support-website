@@ -153,6 +153,15 @@ export function HomePage() {
         <ReferralForm />
         <LandlordForm />
 
+        <section className="section careersCta">
+          <div>
+            <p className="eyebrow">Careers</p>
+            <h2>Do work that makes a real difference.</h2>
+            <p>Join a growing team delivering respectful, practical and person-centred support across Bristol.</p>
+          </div>
+          <Link className="btn" to="/careers">Join Our Team</Link>
+        </section>
+
         <section className="section resourceSection">
           <div>
             <p className="eyebrow">Resources</p>

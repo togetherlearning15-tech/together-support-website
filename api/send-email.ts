@@ -1,6 +1,6 @@
 type FieldValue = string | number | boolean | null | undefined;
 
-type EnquiryType = 'contact' | 'referral' | 'landlord' | 'Recuitment';
+type EnquiryType = 'contact' | 'referral' | 'landlord' | 'careers';
 
 type WebsiteEnquiryPayload = {
   type?: EnquiryType;
@@ -8,10 +8,6 @@ type WebsiteEnquiryPayload = {
   fields?: Record<string, FieldValue>;
 };
 
-/**
- * Keeps TypeScript happy even if "node" has not been added
- * to the types section of tsconfig.json.
- */
 declare const process: {
   env: Record<string, string | undefined>;
 };
@@ -30,7 +26,7 @@ const recipientByType: Record<EnquiryType, string> = {
     'landlords@togsupport.co.uk',
 
   careers:
-    process.env. Recuitment_TO_EMAIL?.trim() ||
+    process.env.CAREERS_TO_EMAIL?.trim() ||
     'recruitment@togsupport.co.uk',
 };
 
@@ -214,17 +210,34 @@ export default {
         payload.source?.trim() || 'Together Support website';
       const fields = payload.fields || {};
 
-      // Spam honeypot. Real visitors should never complete this field.
+      // Honeypot spam protection.
       if (fields.website) {
         return Response.json({ ok: true });
       }
 
-      const name =
-        String(fields.name ?? fields.referrer_name ?? '').trim();
+      const name = String(
+        fields.name ??
+          fields.full_name ??
+          fields.applicant_name ??
+          fields.referrer_name ??
+          fields.contact_name ??
+          '',
+      ).trim();
 
-      const replyTo = String(fields.email ?? '').trim();
+      const replyTo = String(
+        fields.email ??
+          fields.applicant_email ??
+          fields.contact_email ??
+          fields.referrer_email ??
+          '',
+      ).trim();
 
       if (!name) {
+        console.error('Missing name field:', {
+          type,
+          availableFields: Object.keys(fields),
+        });
+
         return Response.json(
           { error: 'Name is required.' },
           { status: 400 },
@@ -232,20 +245,25 @@ export default {
       }
 
       if (!replyTo || !replyTo.includes('@')) {
+        console.error('Missing or invalid email field:', {
+          type,
+          availableFields: Object.keys(fields),
+        });
+
         return Response.json(
           { error: 'A valid email address is required.' },
           { status: 400 },
         );
       }
 
-      const recipient =
-        recipientByType[type] || recipientByType.contact;
-
       const from =
         process.env.RESEND_FROM_EMAIL?.trim() ||
         'Together Support Website <website@togsupport.co.uk>';
 
-      const enquiryResult = await sendEmail(apiKey, {
+      const recipient =
+        recipientByType[type] || recipientByType.contact;
+
+      const sent = await sendEmail(apiKey, {
         from,
         to: [recipient],
         reply_to: replyTo,
@@ -254,22 +272,26 @@ export default {
         text: buildText(type, source, fields),
       });
 
-      if (!enquiryResult.ok) {
-        console.error('Resend enquiry error:', enquiryResult.result);
+      if (!sent.ok) {
+        console.error('Resend send failure:', {
+          type,
+          recipient,
+          status: sent.status,
+          result: sent.result,
+        });
 
         return Response.json(
           {
             error:
-              enquiryResult.result?.message ||
+              sent.result?.message ||
               'The enquiry email could not be sent.',
           },
-          { status: enquiryResult.status },
+          { status: sent.status },
         );
       }
 
-      // Send acknowledgement to the person who submitted the form.
       if (process.env.SEND_ACKNOWLEDGEMENT !== 'false') {
-        const acknowledgementResult = await sendEmail(apiKey, {
+        const acknowledgement = await sendEmail(apiKey, {
           from,
           to: [replyTo],
           subject:
@@ -318,15 +340,17 @@ export default {
           text:
             'Thank you for contacting Together Support. ' +
             'We have received your enquiry and a member of our ' +
-            'team will review it shortly. If your matter is urgent, ' +
-            'please call 0330 221 0527.',
+            'team will review it shortly. If urgent, please call ' +
+            '0330 221 0527.',
         });
 
-        if (!acknowledgementResult.ok) {
-          console.error(
-            'Resend acknowledgement error:',
-            acknowledgementResult.result,
-          );
+        if (!acknowledgement.ok) {
+          console.error('Acknowledgement email failure:', {
+            type,
+            replyTo,
+            status: acknowledgement.status,
+            result: acknowledgement.result,
+          });
         }
       }
 

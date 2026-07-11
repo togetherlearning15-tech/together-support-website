@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { HomePage } from './pages/Home';
 import { AboutPage } from './pages/About';
 import { FAQPage } from './pages/FAQ';
+import { CareersPage } from './pages/Careers';
 import './styles.css';
 
 // Scrolls to a #section on the homepage when arriving via a link like
@@ -33,6 +34,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/faq" element={<FAQPage />} />
+        <Route path="/careers" element={<CareersPage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
