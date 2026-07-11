@@ -79,7 +79,7 @@ export function CareersPage() {
             <ul className="tickList">
               <li>We review applications fairly and confidentially</li>
               <li>You will receive an automatic acknowledgement</li>
-              <li>You can also email your CV directly after submitting</li>
+              <li>Upload your CV securely with your application</li>
             </ul>
           </div>
 
@@ -108,9 +108,10 @@ export function CareersPage() {
                     availability: data.get('availability'),
                     experience_and_qualifications: data.get('experience_and_qualifications'),
                     personal_statement: data.get('personal_statement'),
-                    cv_link: data.get('cv_link'),
+                    cv_filename: (data.get('cv') as File | null)?.name || '',
                     website: data.get('website')
-                  }
+                  },
+                  attachment: data.get('cv') as File | null
                 });
 
                 setStatus('success');
@@ -158,11 +159,20 @@ export function CareersPage() {
                 <option>Yes</option>
                 <option>No</option>
               </select>
-              <input name="cv_link" type="url" placeholder="Optional CV link (OneDrive, Google Drive, etc.)" />
+              <label className="cvUploadField">
+                <span>Upload your CV</span>
+                <input
+                  name="cv"
+                  type="file"
+                  accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  required
+                />
+                <small>PDF, DOC or DOCX. Maximum file size: 5 MB.</small>
+              </label>
             </div>
             <textarea name="experience_and_qualifications" required placeholder="Relevant experience, qualifications and training"></textarea>
             <textarea name="personal_statement" required placeholder="Why would you like to join Together Support?"></textarea>
-            <p className="formHelp">After submitting, you may also email your CV to <a href="mailto:recruitment@togsupport.co.uk">recruitment@togsupport.co.uk</a>.</p>
+            <p className="formHelp">Your CV will be attached securely to the application email sent to our recruitment team.</p>
             <button className="btn" disabled={status === 'sending'}>{status === 'sending' ? 'Sending...' : 'Submit Application'}</button>
             {message && <p className={`formStatus ${status}`}>{message}</p>}
           </form>
