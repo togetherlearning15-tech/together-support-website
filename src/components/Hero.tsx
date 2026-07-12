@@ -1,4 +1,5 @@
 import { ArrowRight, CheckCircle, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { heroSlides } from '../data/siteData';
 
 type HeroProps = {
@@ -10,8 +11,8 @@ export function Hero({ slide, setSlide }: HeroProps) {
   return (
     <section className="hero">
       <div className="heroText">
-        <p className="eyebrow">Supported accommodation • Housing-related support</p>
-        <h1>Providing safe homes. Empowering independent lives.</h1>
+        <p className="eyebrow">Supported accommodation • Housing-related support • Bristol</p>
+        <h1>Supporting People. Strengthening Communities. Creating Better Futures.</h1>
         <p className="lead">
           Together Support provides high-quality supported accommodation and housing-related support for adults experiencing homelessness, mental health challenges, care experience, domestic abuse, substance misuse and other complex needs. We work with local authorities, landlords and professional partners to create safe homes and positive futures.
         </p>
@@ -19,11 +20,11 @@ export function Hero({ slide, setSlide }: HeroProps) {
           <a className="btn" href="#referrals">
             Make a Referral <ArrowRight size={18} />
           </a>
+          <Link className="btn outline" to="/landlords">
+            Partner With Us
+          </Link>
           <a className="btn ghost" href="#properties">
             Available Properties
-          </a>
-          <a className="btn outline" href="#landlords">
-            Become a Landlord
           </a>
         </div>
         <div className="partnerLine">

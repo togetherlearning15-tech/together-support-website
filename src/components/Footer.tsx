@@ -15,12 +15,17 @@ export function Footer() {
         <Link to="/#services">Services</Link>
         <Link to="/#properties">Properties</Link>
         <Link to="/#referrals">Referrals</Link>
-        <Link to="/#landlords">Landlords</Link>
         <Link to="/careers">Careers</Link>
       </div>
       <div>
-        <strong>Support</strong>
+        <strong>For Partners</strong>
+        <Link to="/commissioners">Commissioner Centre</Link>
+        <Link to="/landlords">Landlord Centre</Link>
+        <Link to="/track-referral">Track a Referral</Link>
         <Link to="/faq">FAQ</Link>
+      </div>
+      <div>
+        <strong>Support</strong>
         <span>Privacy Policy</span>
         <span>Cookies</span>
         <Link to="/#contact">Contact</Link>

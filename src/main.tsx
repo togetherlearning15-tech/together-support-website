@@ -5,6 +5,10 @@ import { HomePage } from './pages/Home';
 import { AboutPage } from './pages/About';
 import { FAQPage } from './pages/FAQ';
 import { CareersPage } from './pages/Careers';
+import { CommissionersPage } from './pages/Commissioners';
+import { LandlordsPage } from './pages/Landlords';
+import { ServiceDetailPage } from './pages/ServiceDetail';
+import { ReferralTrackerPage } from './pages/ReferralTracker';
 import './styles.css';
 
 // Scrolls to a #section on the homepage when arriving via a link like
@@ -35,6 +39,10 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/careers" element={<CareersPage />} />
+        <Route path="/commissioners" element={<CommissionersPage />} />
+        <Route path="/landlords" element={<LandlordsPage />} />
+        <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/track-referral" element={<ReferralTrackerPage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
     </BrowserRouter>

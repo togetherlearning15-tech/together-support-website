@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, FileText, Search, Star } from 'lucide-react';
+import { ArrowRight, CheckCircle, FileText, Search, Star } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Hero } from '../components/Hero';
 import { PropertyCard } from '../components/PropertyCard';
@@ -9,7 +9,8 @@ import { LandlordForm } from '../components/LandlordForm';
 import { ContactForm } from '../components/ContactForm';
 import { Footer } from '../components/Footer';
 import { SEO } from '../components/SEO';
-import { heroSlides, impact, process, properties, services, trustPartners, whoWeSupport } from '../data/siteData';
+import { AnimatedCounter } from '../components/AnimatedCounter';
+import { heroSlides, impactStats, process, properties, serviceDetails, trustPartners, whoWeSupport } from '../data/siteData';
 
 export function HomePage() {
   const [q, setQ] = useState('');
@@ -42,19 +43,22 @@ export function HomePage() {
         <Hero slide={slide} setSlide={setSlide} />
 
         <section className="stats impactStats" aria-label="Our impact">
-          {impact.map(([big, small]) => (
-            <div key={big}>
-              <strong>{big}</strong>
-              <span>{small}</span>
+          {impactStats.map((stat) => (
+            <div key={stat.label}>
+              <strong><AnimatedCounter value={stat.value} suffix={stat.suffix} /></strong>
+              <span>{stat.label}</span>
             </div>
           ))}
         </section>
 
         <section className="workingWith" aria-label="Working with">
-          <p className="eyebrow">Working With</p>
+          <p className="eyebrow">Trusted by commissioners &amp; partners</p>
           <div className="partnerLogos">
-            {trustPartners.map((name) => (
-              <div className="partnerLogo" key={name}>{name}</div>
+            {trustPartners.map((partner) => (
+              <div className="partnerLogo" key={partner.name}>
+                <strong>{partner.name}</strong>
+                <span>{partner.type}</span>
+              </div>
             ))}
           </div>
         </section>
@@ -84,12 +88,13 @@ export function HomePage() {
           <p className="eyebrow">What we do</p>
           <h2>Our services</h2>
           <div className="grid cards">
-            {services.map(([Icon, title, text]) => (
-              <article className="card" key={title}>
-                <Icon />
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
+            {serviceDetails.map((service) => (
+              <Link className="card cardLink" to={`/services/${service.slug}`} key={service.slug}>
+                <service.icon />
+                <h3>{service.title}</h3>
+                <p>{service.summary}</p>
+                <span className="cardMore">Learn more <span aria-hidden="true">&rarr;</span></span>
+              </Link>
             ))}
           </div>
         </section>
@@ -151,6 +156,16 @@ export function HomePage() {
         </section>
 
         <ReferralForm />
+
+        <section className="trackerBanner">
+          <div>
+            <p className="eyebrow" style={{ color: '#7ef1e8' }}>Already referred someone?</p>
+            <h2>Track your referral in real time</h2>
+            <p>No phone calls, no chasing emails. Enter your reference number and see exactly where a referral is, from received through to placement offered.</p>
+          </div>
+          <Link className="btn" to="/track-referral">Track My Referral <ArrowRight size={18} /></Link>
+        </section>
+
         <LandlordForm />
 
         <section className="section careersCta">
@@ -169,15 +184,15 @@ export function HomePage() {
           </div>
           <div className="resourceGrid">
             {[
-              ['Referral criteria', 'Understand who we support and how referrals are reviewed.'],
-              ['Safeguarding approach', 'How we manage risk, concerns and multi-agency working.'],
-              ['Landlord information', 'How property partnerships work with Together Support.']
-            ].map(([title, text]) => (
-              <article className="resource" key={title}>
+              ['Commissioner Centre', 'Referral criteria, governance, KPI reporting and brochures for commissioners.', '/commissioners'],
+              ['Safeguarding approach', 'How we manage risk, concerns and multi-agency working.', '/commissioners#safeguarding'],
+              ['Landlord Centre', 'Compliance, property care and how landlord partnerships work.', '/landlords']
+            ].map(([title, text, href]) => (
+              <Link className="resource resourceLink" to={href} key={title}>
                 <FileText />
                 <h3>{title}</h3>
                 <p>{text}</p>
-              </article>
+              </Link>
             ))}
           </div>
         </section>
